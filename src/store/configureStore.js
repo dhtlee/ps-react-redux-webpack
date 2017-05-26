@@ -4,9 +4,14 @@ import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from 'redux-thunk';
 
 export default function configureStore(initialState) {
+
+  const middleware = process.env.NODE_ENV !== 'prod' ?
+    [reduxImmutableStateInvariant(), thunk] :
+    [thunk];
+
   return createStore(
     rootReducer, 
-    initialState, 
+    initialState,
     applyMiddleware(thunk, reduxImmutableStateInvariant())
   );
 }
